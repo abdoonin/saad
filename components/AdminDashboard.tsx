@@ -508,3 +508,5 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
     </div>
   );
 };
+
+export default AdminDashboard;

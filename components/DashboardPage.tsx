@@ -671,7 +671,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           <tr key={item.id} className={`hover:bg-gray-50/80 transition-colors group ${isLowStock ? 'bg-orange-50/30' : ''} ${isOutOfStock ? 'bg-red-50/30' : ''}`}>
                             <td className="px-6 py-4 font-bold text-gray-800">{item.trade_name}</td>
                             <td className="px-6 py-4 text-gray-500">{item.scientific_name}</td>
-                            <td className="px-6 py-4 font-medium text-primary-700">{item.price} ر.س</td>
+                            <td className="px-6 py-4 font-medium text-primary-700">{item.price} د.ع</td>
                             <td className={`px-6 py-4 font-medium ${isLowStock ? 'text-orange-600 font-bold' : ''} ${isOutOfStock ? 'text-red-600 font-bold' : ''}`}>
                               {item.quantity}
                             </td>
@@ -767,7 +767,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                             {log.quantity} وحدات
                           </td>
                           <td className="px-6 py-4 font-bold text-primary-700">
-                            {log.total_price} ر.س
+                            {log.total_price} د.ع
                           </td>
                         </tr>
                       ))
@@ -817,7 +817,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
               <div className="mb-6 bg-gray-50 p-4 rounded-2xl border border-gray-100">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-gray-500">السعر للوحدة:</span>
-                  <span className="font-bold text-primary-700">{sellingItem.price} ر.س</span>
+                  <span className="font-bold text-primary-700">{sellingItem.price} د.ع</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-500">المتوفر حالياً:</span>
@@ -849,7 +849,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
               <div className="flex justify-between items-center p-4 bg-primary-600 rounded-2xl text-white mb-8">
                 <span className="font-medium">الإجمالي:</span>
-                <span className="text-2xl font-black">{(saleQuantity * sellingItem.price).toFixed(2)} ر.س</span>
+                <span className="text-2xl font-black">{(saleQuantity * sellingItem.price).toFixed(2)} د.ع</span>
               </div>
 
               <div className="flex gap-3">
@@ -879,3 +879,5 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
     </div>
   );
 };
+
+export default DashboardPage;
