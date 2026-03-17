@@ -1,0 +1,25 @@
+{
+  "name": "صاد | دليل الصيدليات",
+  "short_name": "صاد",
+  "description": "دليلك الشامل للبحث عن الأدوية في الصيدليات القريبة منك في العراق",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#0d9488",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/pharmacy/192/192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://picsum.photos/seed/pharmacy/512/512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
