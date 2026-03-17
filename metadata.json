@@ -1,0 +1,5 @@
+{
+  "name": "SAAD (صاد) - Pharmacy Locator",
+  "description": "A clean, Arabic RTL pharmacy locator web application to search for medicines in local pharmacies using Supabase.",
+  "requestFramePermissions": []
+}
