@@ -83,6 +83,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative group">
         <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+<<<<<<< HEAD
           <Search className="h-5 w-5 sm:h-6 sm:w-6 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
         </div>
         <input
@@ -90,12 +91,25 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           className="block w-full pr-10 sm:pr-12 pl-28 sm:pl-44 py-3 sm:py-4 bg-white border border-gray-200 rounded-2xl text-base sm:text-lg shadow-sm placeholder-gray-400 
                      focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all disabled:bg-gray-50 disabled:text-gray-500"
           placeholder={isProcessingImage ? "جاري قراءة الصورة..." : "ابحث باسم الدواء..."}
+=======
+          <Search className="h-6 w-6 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+        </div>
+        <input
+          type="text"
+          className="block w-full pr-12 pl-44 py-4 bg-white border border-gray-200 rounded-2xl text-lg shadow-sm placeholder-gray-400 
+                     focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all disabled:bg-gray-50 disabled:text-gray-500"
+          placeholder={isProcessingImage ? "جاري قراءة الصورة واستخراج اسم الدواء..." : "ابحث باسم الدواء التجاري أو العلمي..."}
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={onKeyDown}
           disabled={isProcessingImage}
         />
+<<<<<<< HEAD
         <div className="absolute inset-y-1.5 left-1.5 flex gap-1.5 sm:gap-2">
+=======
+        <div className="absolute inset-y-1.5 left-1.5 flex gap-2">
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
           <input 
             type="file" 
             accept="image/*" 
@@ -106,29 +120,51 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           {isProcessingImage ? (
             <button
               onClick={handleCancelImageProcessing}
+<<<<<<< HEAD
               className="h-full px-2.5 sm:px-4 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors flex items-center justify-center gap-1.5 sm:gap-2"
               title="إلغاء قراءة الصورة"
             >
               <Loader2 className="animate-spin" size={18} />
               <X size={18} />
+=======
+              className="h-full px-4 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors flex items-center justify-center gap-2"
+              title="إلغاء قراءة الصورة"
+            >
+              <Loader2 className="animate-spin" size={20} />
+              <X size={20} />
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
             </button>
           ) : (
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={loading}
+<<<<<<< HEAD
               className="h-full px-2.5 sm:px-4 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               title="البحث باستخدام صورة الروشتة أو الدواء"
             >
               <Camera size={18} />
+=======
+              className="h-full px-4 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              title="البحث باستخدام صورة الروشتة أو الدواء"
+            >
+              <Camera size={20} />
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
             </button>
           )}
           <button
             onClick={onSearch}
             disabled={loading || !value.trim() || isProcessingImage}
+<<<<<<< HEAD
             className="h-full px-4 sm:px-6 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors
                        disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-sm text-sm sm:text-base"
           >
             {loading ? '...' : 'بحث'}
+=======
+            className="h-full px-6 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl transition-colors
+                       disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-sm"
+          >
+            {loading ? 'جاري البحث...' : 'بحث'}
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
           </button>
         </div>
       </div>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const CACHE_NAME = 'saad-app-cache-v2';
+=======
+const CACHE_NAME = 'saad-app-cache-v1';
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
 const urlsToCache = [
   '/',
   '/index.html',

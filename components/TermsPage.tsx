@@ -73,5 +73,8 @@ export const TermsPage: React.FC = () => {
     </div>
   );
 };
+<<<<<<< HEAD
 
 export default TermsPage;
+=======
+>>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
