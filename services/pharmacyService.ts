@@ -8,6 +8,12 @@ export const pharmacyLogin = async (email: string, password?: string): Promise<U
     throw new Error('Password is required for login');
   }
 
+  // محاولة تسجيل الدخول عبر Supabase Auth وهذا ضروري لتخطي RLS
+  await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
   // البحث والمطابقة في جدول الصيدليات مباشرة (للتجربة المحلية)
   const { data: profileData, error: profileError } = await supabase
     .from('pharmacies')
@@ -52,9 +58,11 @@ export const updatePharmacyProfile = async (id: string, updates: Partial<Pharmac
     .eq('id', id)
     .select();
 
-  // Robust Error Handling & Optimistic Fallback
-  if (error || !data || data.length === 0) {
-    throw error || new Error('Failed to update profile');
+  if (error) {
+    throw error;
+  }
+  if (!data || data.length === 0) {
+    throw new Error('UPDATE Policy: تم رفض التعديل بواسطة قاعدة البيانات (RLS). يرجى التحقق من سياسات الحماية.');
   }
 
   return data[0];

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { Locate, Navigation } from 'lucide-react';
+import { Locate, Navigation, Phone, MessageCircle } from 'lucide-react';
 import L from 'leaflet';
 import { SearchResult } from '../types';
 import { isPharmacyOpen } from '../utils/pharmacy';
@@ -119,59 +119,69 @@ export const ResultsMap: React.FC<ResultsMapProps> = ({ results, userLocation })
               key={result.id} 
               position={[pharmacies.latitude, pharmacies.longitude]}
             >
-              <Popup>
-                <div className="text-right font-sans min-w-[200px]" dir="rtl">
-                  <strong className="block text-primary-700 text-lg mb-1">{pharmacies.name}</strong>
-                  <div className="text-sm text-gray-600 mb-2">{pharmacies.address}</div>
+              <Popup className="rounded-2xl border-none">
+                <div className="text-right font-sans min-w-[250px] p-4" dir="rtl">
+                  <div className="mb-4 border-b border-gray-100 pb-3">
+                    <h3 className="text-[#137b70] font-extrabold text-lg leading-tight mb-1">{pharmacies.name}</h3>
+                    <p className="text-sm text-gray-500 font-medium">{pharmacies.address}</p>
+                  </div>
                   
-                  <div className="bg-gray-50 p-2 rounded-lg mb-2 border border-gray-100">
-                    <div className="font-bold text-gray-800">{medicines.trade_name}</div>
-                    <div className="flex justify-between items-center mt-1">
-                      <span className="text-primary-600 font-bold">{price} د.ع</span>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${quantity > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                  <div className="bg-gray-50 border border-gray-100 rounded-xl p-3 mb-4 shadow-sm">
+                    <div className="font-extrabold text-gray-800 text-base mb-3 leading-snug">{medicines.trade_name}</div>
+                    <div className="flex justify-between items-end">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] text-gray-500 mb-0.5 font-bold">السعر</span>
+                        <span className="text-[#137b70] font-black text-lg leading-none">{price} <span className="text-xs font-bold text-gray-400">د.ع</span></span>
+                      </div>
+                      <span className={`text-xs px-3 py-1 rounded-full font-bold shadow-sm ${quantity > 0 ? 'bg-[#cff5e1] text-[#137b70] border-[#b4e6c9] border' : 'bg-red-100 text-red-700 border-red-200 border'}`}>
                         {quantity > 0 ? 'متوفر' : 'غير متوفر'}
                       </span>
                     </div>
                   </div>
                   
-                  <div className="flex justify-between items-center text-xs mt-2">
-                    <span className={isOpen ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
-                      {isOpen ? 'مفتوح الآن' : 'مغلق'}
-                    </span>
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <div className="flex items-center gap-1.5">
+                      <div className={`w-2 h-2 rounded-full animate-pulse ${isOpen ? 'bg-[#15af4c]' : 'bg-red-500'}`}></div>
+                      <span className={`text-xs font-bold ${isOpen ? 'text-[#15af4c]' : 'text-red-500'}`}>
+                        {isOpen ? 'مفتوح الآن' : 'مغلق'}
+                      </span>
+                    </div>
                     {userLocation && (
-                      <span className="text-gray-500">
+                      <span className="text-gray-500 font-bold bg-gray-50 text-[10px] px-2 py-0.5 rounded-md border border-gray-100">
                         يبعد {
                           calculateDistance(userLocation.lat, userLocation.lng, pharmacies.latitude, pharmacies.longitude) < 1 
-                          ? `${Math.round(calculateDistance(userLocation.lat, userLocation.lng, pharmacies.latitude, pharmacies.longitude) * 1000)} متر` 
+                          ? `${Math.round(calculateDistance(userLocation.lat, userLocation.lng, pharmacies.latitude, pharmacies.longitude) * 1000)} م` 
                           : `${calculateDistance(userLocation.lat, userLocation.lng, pharmacies.latitude, pharmacies.longitude).toFixed(1)} كم`
                         }
                       </span>
                     )}
                   </div>
                   
-                  <div className="flex gap-2 mt-3">
+                  <div className="grid grid-cols-3 gap-1.5">
                     <a 
                       href={`tel:${pharmacies.phone}`}
-                      className="flex-1 text-center py-1.5 bg-gray-100 text-[#109419] rounded hover:bg-gray-200 transition-colors text-xs font-bold"
+                      className="flex flex-col items-center justify-center gap-1 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-all font-bold text-xs border border-gray-200"
                     >
-                      اتصال
+                      <Phone size={14} className="text-blue-600" />
+                      <span>اتصال</span>
                     </a>
                     <a 
                       href={`https://wa.me/${pharmacies.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`مرحباً، هل دواء ${medicines.trade_name} متوفر لديكم؟`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center py-1.5 bg-[#25D366] text-[#fdfdfd] rounded hover:bg-[#128C7E] transition-colors text-xs font-bold"
+                      className="flex flex-col items-center justify-center gap-1 py-2 bg-[#25D366] text-white rounded-lg hover:bg-[#128C7E] transition-all font-bold text-xs shadow-sm"
                     >
-                      واتساب
+                      <MessageCircle size={14} className="text-white" />
+                      <span>واتساب</span>
                     </a>
                     <a 
                       href={`https://www.google.com/maps/dir/?api=1&destination=${pharmacies.latitude},${pharmacies.longitude}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1 py-1.5 bg-primary-600 text-[#ecedef] rounded hover:bg-primary-700 transition-colors text-xs font-bold"
+                      className="flex flex-col items-center justify-center gap-1 py-2 bg-[#e8f0fe] text-[#1a73e8] rounded-lg hover:bg-[#d2e3fc] transition-all font-bold text-xs border border-[#d2e3fc]"
                     >
-                      <Navigation size={12} />
-                      الاتجاهات
+                      <Navigation size={14} className="text-[#1a73e8]" />
+                      <span>الاتجاهات</span>
                     </a>
                   </div>
                 </div>

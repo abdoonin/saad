@@ -1,5 +1,3 @@
-import { GoogleGenAI } from "@google/genai";
-
 export interface AIMapsResult {
   text: string;
   places: { title: string; uri: string }[];
@@ -7,57 +5,61 @@ export interface AIMapsResult {
 
 export const findNearbyPharmaciesWithAI = async (query: string, lat?: number, lng?: number): Promise<AIMapsResult> => {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    
-    let prompt = `أنا أبحث عن صيدليات قريبة قد يتوفر فيها دواء "${query}".
-يرجى البحث في خرائط جوجل وتزويدي بقائمة بالصيدليات القريبة.
-
-تعليمات هامة جداً لصياغة الرد:
-1. ابدأ الرد برسالة تحذيرية ودية توضح أن: "⚠️ هذه الصيدليات المعروضة غير مشتركة في تطبيق صاد، ولذلك لا يمكننا التأكد من توفر الدواء لديها في الوقت الحالي. يرجى الاتصال بهم للتأكد قبل الذهاب."
-2. اعرض قائمة الصيدليات بوضوح.
-3. اختم الرد برسالة تشجيعية للمستخدم تقول فيها: "💡 مساهمتك تهمنا: عند زيارتك أو اتصالك بهذه الصيدليات، شاركهم تجربتك وأخبرهم عن (تطبيق صاد) ودعوتهم للاشتراك به، لنسهل عليك وعلى الجميع إيجاد الأدوية مستقبلاً!"`;
-    
-    const config: any = {
-      tools: [{ googleMaps: {} }],
-    };
-
-    if (lat && lng) {
-      config.toolConfig = {
-        retrievalConfig: {
-          latLng: {
-            latitude: lat,
-            longitude: lng
-          }
-        }
+    if (!lat || !lng) {
+      return {
+        text: "عذراً، يرجى تفعيل الموقع (GPS) لنتمكن من البحث عن الصيدليات المجاورة لك بدقة.",
+        places: []
       };
     }
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-      config: config
-    });
+    // استخراج الصيدليات قريبة (في دائرة 5000 متر = 5 كيلومتر) بحد أقصى 5 صيدليات
+    const overpassQuery = `
+      [out:json];
+      node["amenity"="pharmacy"](around:5000, ${lat}, ${lng});
+      out 5;
+    `;
+    
+    // استخدام الخرائط المفتوحة المصدر كبديل مجاني قوي
+    const response = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpassQuery)}`);
+    
+    if (!response.ok) {
+      throw new Error(`Overpass HTTP error! status: ${response.status}`);
+    }
 
-    let resultText = response.text || "";
-    const chunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
-    
+    const data = await response.json();
     const places: { title: string; uri: string }[] = [];
-    
-    chunks.forEach((chunk: any) => {
-      if (chunk.maps?.uri && chunk.maps?.title) {
+
+    if (data.elements && data.elements.length > 0) {
+      data.elements.forEach((pharmacy: any) => {
+        // استخراج أفضل اسم متاح أو إعطاء اسم مبسط 
+        const name = pharmacy.tags?.['name:ar'] || pharmacy.tags?.name || pharmacy.tags?.['name:en'] || "صيدلية محلية (بدون اسم)";
+        
+        // رابط يفتح الخريطة على إحداثيات الصيدلية في خرائط جوجل مباشرة
+        const uri = `https://www.google.com/maps/search/?api=1&query=${pharmacy.lat},${pharmacy.lon}`;
+        
         places.push({
-          title: chunk.maps.title,
-          uri: chunk.maps.uri
+          title: name,
+          uri: uri
         });
-      }
-    });
+      });
+    }
+
+    let resultText = `لقد قمنا بالبحث عن الدواء المطلوب "**${query}**"، وإليك أقرب الصيدليات لموقعك في نطاق 5 كيلومتر:
+    
+⚠️ **تنبيه هام:** هذه الصيدليات المعروضة هنا غير مشتركة في بيانات تطبيق صاد حالياً. لذلك *لا يمكننا التأكيد بشكل قطعي* من توفر الدواء لديها في هذا الوقت. يرجى الاتصال بهم أو زيارتهم للتحقق.
+
+💡 **مساهمتك تهمنا:** عندما تزور هذه الصيدليات، أخبرهم عن (تطبيق صاد) واقترح عليهم الاشتراك به حتى يسهل للجميع العثور على الأدوية بسرعة في الفترات القادمة!`;
+
+    if (places.length === 0) {
+      resultText = `عذراً، بحثنا عن دواء "**${query}**"، ولم نعثر على سجلات لصيدليات قريبة جداً من موقعك الحالي (ضمن مسافة 5 كيلومتر) في الخرائط المفتوحة.\n\n⚠️ يرجى توسيع نطاق بحثك أو التجول في المنطقة للبحث. ولا تنسَ إخبار الصيدليات التي تجدها بالاشتراك بتطبيق صاد!`;
+    }
 
     return {
       text: resultText,
       places
     };
   } catch (error) {
-    console.error("AI Maps Error:", error);
-    throw new Error("فشل في البحث باستخدام الذكاء الاصطناعي");
+    console.error("Maps Search Error (Overpass):", error);
+    throw new Error("فشل في البحث عن الصيدليات عبر نظام الخرائط المفتوحة");
   }
 };

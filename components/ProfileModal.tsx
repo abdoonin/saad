@@ -56,8 +56,12 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, onS
         closing_time: closingTime || null
       });
       onClose();
-    } catch (err) {
-      setError('حدث خطأ أثناء حفظ البيانات');
+    } catch (err: any) {
+      if (err.message && err.message.includes('UPDATE Policy')) {
+        setError('مرفوض من قاعدة البيانات للمستخدم الحالي (RLS). يرجى تحديث الإعدادات في Supabase.');
+      } else {
+        setError('حدث خطأ أثناء حفظ البيانات');
+      }
     } finally {
       setLoading(false);
     }

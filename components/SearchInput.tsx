@@ -67,7 +67,8 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     } catch (error: any) {
       if (error.message === 'Cancelled') return;
       console.error(error);
-      alert('حدث خطأ أثناء معالجة الصورة.');
+      const msg = error.message || 'حدث خطأ أثناء قراءة الصورة';
+      alert(msg);
     } finally {
       if (!cancelRef.current) {
         setIsProcessingImage(false);

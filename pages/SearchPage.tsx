@@ -28,7 +28,7 @@ export default function SearchPage() {
   const [sortBy, setSortBy] = useState<'default' | 'price' | 'distance'>('default');
   const [filterInStock, setFilterInStock] = useState(false);
   const [filterOpenNow, setFilterOpenNow] = useState(false);
-  const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
 
   const handleRequestLocation = () => {
@@ -270,10 +270,10 @@ export default function SearchPage() {
             <div className="mt-8 pt-8 border-t border-gray-100">
               <h4 className="text-lg font-bold text-gray-800 mb-4 flex items-center justify-center gap-2">
                 <Sparkles className="text-amber-500" size={20} />
-                البحث الذكي عبر خرائط جوجل
+                البحث الذكي عبر الخرائط
               </h4>
               <p className="text-gray-500 mb-6 text-sm max-w-md mx-auto">
-                يمكننا استخدام الذكاء الاصطناعي للبحث عن صيدليات قريبة منك على خرائط جوجل قد يتوفر فيها هذا الدواء.
+                يمكننا استخدام البحث عن صيدليات قريبة منك على الخرائط  التي قد يتوفر فيها هذا الدواء.
               </p>
 
               {aiMapsResult ? (
