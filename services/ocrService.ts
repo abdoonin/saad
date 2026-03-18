@@ -1,11 +1,17 @@
 import { GoogleGenAI } from "@google/genai";
 
 export const extractMedicineNameFromImage = async (base64Image: string, mimeType: string): Promise<string> => {
+  const apiKey = process.env.GEMINI_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("مفتاح Gemini API غير مُعرَّف. يرجى إضافة GEMINI_API_KEY في ملف .env");
+  }
+
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const ai = new GoogleGenAI({ apiKey });
     
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-pro-preview",
+      model: "gemini-2.0-flash",
       contents: {
         parts: [
           {
@@ -22,8 +28,11 @@ export const extractMedicineNameFromImage = async (base64Image: string, mimeType
     });
 
     return response.text?.trim() || "";
-  } catch (error) {
+  } catch (error: any) {
     console.error("OCR Error:", error);
-    throw new Error("فشل في استخراج اسم الدواء من الصورة");
+    if (error.message?.includes("API key")) {
+      throw new Error("مفتاح API غير صالح. يرجى التحقق من GEMINI_API_KEY في ملف .env");
+    }
+    throw new Error("فشل في استخراج اسم الدواء من الصورة. تأكد من اتصالك بالإنترنت وصلاحية مفتاح API.");
   }
 };

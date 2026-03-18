@@ -143,41 +143,42 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
   return (
     <div className="animate-in fade-in duration-500">
-      <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="mb-8 flex flex-col gap-4">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 mb-2">لوحة التحكم الإدارية</h1>
-          <p className="text-gray-500">مرحباً {user.name}، يمكنك إدارة النظام بالكامل من هنا.</p>
+          <h1 className="text-2xl sm:text-3xl font-black text-gray-900 mb-2">لوحة التحكم الإدارية</h1>
+          <p className="text-gray-500 text-sm sm:text-base">مرحباً {user.name}، يمكنك إدارة النظام بالكامل من هنا.</p>
         </div>
-        <div className="flex bg-white p-1 rounded-2xl shadow-sm border border-gray-100">
+        <div className="flex flex-wrap bg-white p-1 rounded-2xl shadow-sm border border-gray-100 gap-1">
           {activeTab === 'pharmacies' && (
             <button 
               onClick={() => setShowAddModal(true)}
-              className="ml-2 px-4 py-2.5 bg-green-600 text-white rounded-xl font-bold text-sm hover:bg-green-700 transition-all flex items-center gap-2 shadow-md shadow-green-600/20"
+              className="ml-1 px-3 py-2 sm:px-4 sm:py-2.5 bg-green-600 text-white rounded-xl font-bold text-xs sm:text-sm hover:bg-green-700 transition-all flex items-center gap-1.5 sm:gap-2 shadow-md shadow-green-600/20"
             >
-              <Plus size={18} />
-              إضافة صيدلية
+              <Plus size={16} />
+              <span className="hidden xs:inline">إضافة صيدلية</span>
+              <span className="xs:hidden">إضافة</span>
             </button>
           )}
           <button 
             onClick={() => setActiveTab('stats')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'stats' ? 'bg-primary-600 text-white shadow-md' : 'text-gray-500 hover:bg-gray-50'}`}
+            className={`px-3 py-2 sm:px-6 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 ${activeTab === 'stats' ? 'bg-primary-600 text-white shadow-md' : 'text-gray-500 hover:bg-gray-50'}`}
           >
-            <BarChart3 size={18} />
-            الإحصائيات
+            <BarChart3 size={16} />
+            <span>الإحصائيات</span>
           </button>
           <button 
             onClick={() => setActiveTab('pharmacies')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'pharmacies' ? 'bg-primary-600 text-white shadow-md' : 'text-gray-500 hover:bg-gray-50'}`}
+            className={`px-3 py-2 sm:px-6 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 ${activeTab === 'pharmacies' ? 'bg-primary-600 text-white shadow-md' : 'text-gray-500 hover:bg-gray-50'}`}
           >
-            <Users size={18} />
-            الصيدليات
+            <Users size={16} />
+            <span>الصيدليات</span>
           </button>
           <button 
             onClick={() => setActiveTab('medicines')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'medicines' ? 'bg-primary-600 text-white shadow-md' : 'text-gray-500 hover:bg-gray-50'}`}
+            className={`px-3 py-2 sm:px-6 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 ${activeTab === 'medicines' ? 'bg-primary-600 text-white shadow-md' : 'text-gray-500 hover:bg-gray-50'}`}
           >
-            <Package size={18} />
-            الأدوية
+            <Package size={16} />
+            <span>الأدوية</span>
           </button>
         </div>
       </div>
@@ -382,8 +383,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
                 </div>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-right">
+              <div className="overflow-x-auto -mx-1 px-1">
+                <table className="w-full text-right min-w-[600px]">
                   <thead>
                     <tr className="bg-gray-50 text-gray-500 text-sm uppercase tracking-wider">
                       {activeTab === 'pharmacies' ? (

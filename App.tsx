@@ -66,7 +66,7 @@ function AppLayout() {
         currentView={currentView}
       />
 
-      <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 py-12 max-w-6xl">
+      <main className="flex-grow container mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-8 sm:py-12 max-w-6xl">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<SearchPage />} />
