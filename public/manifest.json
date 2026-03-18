@@ -10,21 +10,13 @@
   "lang": "ar",
   "icons": [
     {
-<<<<<<< HEAD
       "src": "/favicon.png",
-=======
-      "src": "https://picsum.photos/seed/pharmacy/192/192",
->>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-<<<<<<< HEAD
       "src": "/favicon.png",
-=======
-      "src": "https://picsum.photos/seed/pharmacy/512/512",
->>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

@@ -14,10 +14,7 @@
     "@supabase/supabase-js": "^2.95.3",
     "@tailwindcss/vite": "^4.2.1",
     "@types/papaparse": "^5.5.2",
-<<<<<<< HEAD
     "@vercel/analytics": "^2.0.1",
-=======
->>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
     "html5-qrcode": "^2.3.8",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.563.0",
@@ -26,10 +23,7 @@
     "react-dom": "^19.2.4",
     "react-leaflet": "^5.0.0",
     "react-markdown": "^10.1.0",
-<<<<<<< HEAD
     "react-router-dom": "^7.13.1",
-=======
->>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
