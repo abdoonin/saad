@@ -251,11 +251,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({ isOpen, onClose,
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-<<<<<<< HEAD
                 <label className="block text-sm font-bold text-gray-700 mb-2">السعر (د.ع)</label>
-=======
-                <label className="block text-sm font-bold text-gray-700 mb-2">السعر (ر.س)</label>
->>>>>>> b75c855c49f0bf120451948a9c5fc2083f2a4ddd
                 <input
                   type="number"
                   step="0.01"
